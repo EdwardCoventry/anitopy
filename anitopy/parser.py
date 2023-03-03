@@ -277,7 +277,7 @@ class Parser:
 
             # Ignore if it's only a dash
             if self.tokens.distance(token_begin, token_end) <= 2 and \
-                    parser_helper.is_dash_character(token_begin.content):
+                    parser_helper.is_dash_character(token_begin.content) and token_end is not None:
                 continue
 
             # If token end is a bracket, then we get the previous token to be
