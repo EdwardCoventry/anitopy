@@ -12,14 +12,14 @@ DASHES = '-\u2010\u2011\u2012\u2013\u2014\u2015'
 
 
 def find_number_in_string(string):
-    is_number = [char.isdigit() for char in string]
+    is_number = [char.isdecimal() for char in string]
     if any(is_number):
         return is_number.index(True)
     return None
 
 
 def find_non_number_in_string(string):
-    is_number = [char.isdigit() for char in string]
+    is_number = [char.isdecimal() for char in string]
     if not all(is_number):
         return is_number.index(False)
     return None
@@ -85,7 +85,7 @@ def check_anime_season_keyword(elements, parsed_tokens, token):
             return True
 
     next_token = parsed_tokens.find_next(token, TokenFlags.NOT_DELIMITER)
-    if next_token and next_token.content.isdigit():
+    if next_token and next_token.content.isdecimal():
         set_anime_season(token, next_token, next_token.content)
         return True
 
@@ -98,6 +98,7 @@ def is_token_isolated(parsed_tokens, token):
         return False
 
     next_token = parsed_tokens.find_next(token, TokenFlags.NOT_DELIMITER)
+
 
     if next_token is None:
         return True
