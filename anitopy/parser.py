@@ -44,7 +44,7 @@ class Parser:
             if not word:
                 continue
             # Don't bother if the word is a number that cannot be CRC
-            if len(word) != 8 and word.isdigit():
+            if len(word) != 8 and word.isdecimal():
                 continue
 
             category = ElementCategory.UNKNOWN
@@ -90,7 +90,7 @@ class Parser:
 
     def search_for_isolated_numbers(self):
         for token in self.tokens.get_list(TokenFlags.UNKNOWN):
-            if not token.content.isdigit() or \
+            if not token.content.isdecimal() or \
                     not parser_helper.is_token_isolated(self.tokens, token):
                 continue
 
@@ -136,7 +136,7 @@ class Parser:
             return  # We have previously found an episode number via keywords
 
         # From now on, we're only interested in numeric tokens
-        tokens = [token for token in tokens if token.content.isdigit()]
+        tokens = [token for token in tokens if token.content.isdecimal()]
 
         if not tokens:
             return

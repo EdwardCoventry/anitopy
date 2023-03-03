@@ -113,7 +113,7 @@ def number_comes_before_another_number(elements, parsed_tokens, token):
         if separator == '&' or separator == 'of':
             other_token = parsed_tokens.find_next(
                 separator_token, TokenFlags.NOT_DELIMITER)
-            if other_token and other_token.content.isdigit():
+            if other_token and other_token.content.isdecimal():
                 set_episode_number(elements, token.content, token, validate=False)
                 if separator == '&':
                     set_episode_number(
@@ -127,7 +127,7 @@ def number_comes_before_another_number(elements, parsed_tokens, token):
 
 def search_for_episode_patterns(elements, parsed_tokens, tokens):
     for token in tokens:
-        numeric_front = token.content[0].isdigit()
+        numeric_front = token.content[0].isdecimal()
 
         if not numeric_front:
             # e.g. "EP.1", "Vol.1"
@@ -293,13 +293,13 @@ def match_japanese_counter_pattern(elements, word, token):
 
 
 def match_episode_patterns(elements, parsed_tokens, word, token):
-    if word.isdigit():
+    if word.isdecimal():
         return False
 
     word = word.strip(' -')
 
-    numeric_front = word[0].isdigit()
-    numeric_back = word[-1].isdigit()
+    numeric_front = word[0].isdecimal()
+    numeric_back = word[-1].isdecimal()
 
     # e.g. "01v2"
     if numeric_front and numeric_back:
@@ -385,13 +385,13 @@ def match_multi_volume_pattern(elements, word, token):
 
 def match_volume_patterns(elements, word, token):
     # All patterns contain at least one non-numeric character
-    if word.isdigit():
+    if word.isdecimal():
         return False
 
     word = word.strip(' -')
 
-    numeric_front = word[0].isdigit()
-    numeric_back = word[-1].isdigit()
+    numeric_front = word[0].isdecimal()
+    numeric_back = word[-1].isdecimal()
 
     # e.g. "01v2"
     if numeric_front and numeric_back:
@@ -408,7 +408,7 @@ def match_volume_patterns(elements, word, token):
 
 
 def set_season_number(elements, number, token):
-    if not number.isdigit():
+    if not number.isdecimal():
         return False
 
     elements.insert(ElementCategory.ANIME_SEASON, number)
@@ -435,7 +435,7 @@ def search_for_equivalent_numbers(elements, parsed_tokens, tokens):
 
         # Check if it's an isolated number
         if not parser_helper.is_token_isolated(parsed_tokens, next_token) or \
-                not next_token.content.isdigit() or \
+                not next_token.content.isdecimal() or \
                 not is_valid_episode_number(next_token.content):
             continue
 
