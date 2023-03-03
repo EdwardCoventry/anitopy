@@ -60,6 +60,9 @@ def set_alternative_episode_number(elements, number, token):
 def check_extent_keyword(elements, parsed_tokens, category, token):
     next_token = parsed_tokens.find_next(token, TokenFlags.NOT_DELIMITER)
 
+    if next_token is None:
+        return False
+
     if next_token.category == TokenCategory.UNKNOWN:
         if next_token and \
                 parser_helper.find_number_in_string(next_token.content) \
