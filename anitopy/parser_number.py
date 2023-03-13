@@ -458,7 +458,7 @@ def search_for_separated_numbers(elements, parsed_tokens, tokens):
         previous_token = parsed_tokens.find_previous(token, TokenFlags.NOT_DELIMITER)
 
         # See if the number has a preceding "-" separator
-        if previous_token.category == TokenCategory.UNKNOWN and \
+        if previous_token and previous_token.category == TokenCategory.UNKNOWN and \
                 parser_helper.is_dash_character(previous_token.content):
             if set_episode_number(elements, token.content, token, validate=True):
                 previous_token.category = TokenCategory.IDENTIFIER
